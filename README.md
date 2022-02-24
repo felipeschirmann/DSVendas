@@ -4,8 +4,8 @@ Site: https://devsuperior.com.br/
 Git of event: https://github.com/devsuperior/sds5
 
 Model: 
-[https://raw.githubusercontent.com/felipeschirmann/DSVendas/main/assets/sds3-mc.png]
+<img src="https://raw.githubusercontent.com/felipeschirmann/DSVendas/main/assets/sds3-mc.png" alt="model"/>
 
-## Backend in ->  https://felipeschirmann-sds5.herokuapp.com
+### Backend in ->  https://felipeschirmann-sds5.herokuapp.com
 
-## Published in -> https://felipeschirmann-sds5-projeto-vendas.netlify.app
+### Published in -> https://felipeschirmann-sds5-projeto-vendas.netlify.app
