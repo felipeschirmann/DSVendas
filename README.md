@@ -1,5 +1,6 @@
 # Project-sds5 Week Spring React (DSVendas)
 [![Docker Image CI](https://github.com/felipeschirmann/DSVendas/actions/workflows/CI-docker-image.yml/badge.svg)](https://github.com/felipeschirmann/DSVendas/actions/workflows/CI-docker-image.yml)
+</br>
 Model: 
 </br>
 <img src="https://raw.githubusercontent.com/felipeschirmann/DSVendas/main/assets/sds3-mc.png" alt="model"/>
