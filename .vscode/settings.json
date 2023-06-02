@@ -3,5 +3,6 @@
     "yaml.schemas": {
         "file:///Users/felipeschirmann/.vscode/extensions/atlassian.atlascode-2.9.1/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
         "https://json.schemastore.org/hammerkit.json": "file:///Users/felipeschirmann/projetos/projeto-sds5/.github/workflows/build.yml"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }
