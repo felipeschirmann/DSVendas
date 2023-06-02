@@ -2,8 +2,13 @@ name: ci
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [ "main" ]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'backend/**'
 
 jobs:
   docker:
@@ -39,4 +44,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: felipeschirmann/ds-vendas:${{github.run_number}},latest
+          tags: felipeschirmann/ds-vendas:${{github.run_number}},felipeschirmann/ds-vendas:latest
