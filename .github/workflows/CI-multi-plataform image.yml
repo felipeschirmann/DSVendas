@@ -23,7 +23,7 @@ jobs:
         run: rm -rf frontend/
       - name: Build with Maven
         run: mvn clean install
-        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./backend
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{github.run_number}},latest
+          tags: felipeschirmann/ds-vendas:${{github.run_number}},latest
