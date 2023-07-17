@@ -4,6 +4,8 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8cd1c6b3-aa8e-4942-85ba-bc6e4d1d6433/deploy-status)](https://app.netlify.com/sites/felipeschirmann-sds5-projeto-vendas/deploys)
 
 </br>
+Project built with stack Spring + React of a dashboard of sales with data in database postgres and use of JPA for access of data.
+</br>
 
 Model: 
 </br>
