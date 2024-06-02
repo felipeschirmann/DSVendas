@@ -31,6 +31,7 @@ const DonutChart = () => {
     },
   };
   return (
+    // @ts-ignore
     <Chart
       options={{ ...options, labels: chatData.labels }}
       series={chatData.series}
