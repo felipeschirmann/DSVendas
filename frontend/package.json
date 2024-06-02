@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
 <<<<<<< HEAD
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "react-scripts build",
 =======
     "build": "eact-scripts --openssl-legacy-provider build",
 >>>>>>> b422cd43d4dc0c7ed7cfbd6d5806efdcd445285b
