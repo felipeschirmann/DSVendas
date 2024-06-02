@@ -31,10 +31,7 @@ public class SecurityConfig {
 			)
 			.csrf((protection) -> protection
                     .ignoringRequestMatchers(toH2Console()) // <- 
-            )
-			.cors((cors) -> cors
-					.configurationSource(profileTesConfigurationSource())
-			);
+            );
 		}
         http
             .authorizeHttpRequests((requests) -> requests
@@ -51,11 +48,14 @@ public class SecurityConfig {
 //            )
             .headers((header) -> header
                 .frameOptions().sameOrigin()
-            );
+            )
+            .cors((cors) -> cors
+					.configurationSource(profileConfigurationSource())
+			);
         return http.build();
     }
 
-	CorsConfigurationSource profileTesConfigurationSource() {
+	CorsConfigurationSource profileConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList(env.getProperty("cors.allow.frontend")));
 		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
