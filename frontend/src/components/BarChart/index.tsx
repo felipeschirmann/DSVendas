@@ -56,6 +56,7 @@ const BarChart = () => {
     },
   };
   return (
+    // @ts-ignore
     <Chart
       options={{ ...options, xaxis: charData.labels }}
       series={charData.series}
