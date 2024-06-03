@@ -22,23 +22,21 @@ public class SecurityConfig {
 	@Autowired
 	private Environment env;
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-			http
-			.authorizeHttpRequests((requests) -> requests
-					.requestMatchers(toH2Console()).permitAll() // <-
+			
+			http.authorizeHttpRequests((requests) -> requests
+					.requestMatchers(toH2Console())
+					.permitAll() // <-
 			)
 			.csrf((protection) -> protection
-                    .ignoringRequestMatchers(toH2Console()) // <- 
-            );
+					.ignoringRequestMatchers(toH2Console()) // <-
+			);
 		}
-        http
-            .authorizeHttpRequests((requests) -> requests
-                // another matchers
-            	.requestMatchers("/**").permitAll()	
-                .anyRequest().authenticated()
-            )
+		http.authorizeHttpRequests((requests) -> requests
+				// another matchers
+				.requestMatchers("/**").permitAll().anyRequest().authenticated())
 //            .formLogin((login) -> login
 //                .loginPage("/login")
 //                .permitAll()
@@ -46,19 +44,18 @@ public class SecurityConfig {
 //            .logout((logout) -> logout
 //                .permitAll()
 //            )
-            .headers((header) -> header
-                .frameOptions().sameOrigin()
-            )
-            .cors((cors) -> cors
-					.configurationSource(profileConfigurationSource())
-			);
-        return http.build();
-    }
+				.headers(headers -> headers
+						.frameOptions(frameOptions -> frameOptions
+								.sameOrigin()))
+				.cors((cors) -> cors
+						.configurationSource(profileConfigurationSource()));
+		return http.build();
+	}
 
 	CorsConfigurationSource profileConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList(env.getProperty("cors.allow.frontend")));
-		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
