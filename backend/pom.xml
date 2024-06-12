@@ -58,7 +58,6 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<resources>
 			<resource>
@@ -73,5 +72,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
