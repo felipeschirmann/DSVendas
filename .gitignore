@@ -1,3 +1,15 @@
 postgres-data
 .DS_Store
 .metadata/
+
+# Local reference & playbook docs
+readme-local.md
+.gemini/
+
+# Environment Configuration Files
+.env
+.env.dev
+.env.homolog
+
+# IDE Metadata
+.idea/
