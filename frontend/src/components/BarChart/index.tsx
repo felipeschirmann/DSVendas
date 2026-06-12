@@ -52,7 +52,45 @@ const BarChart = () => {
     plotOptions: {
       bar: {
         horizontal: true,
+        borderRadius: 4,
+        distributed: true,
       },
+    },
+    chart: {
+      background: "transparent",
+      foreColor: "#cbd5e1",
+      toolbar: {
+        show: false,
+      },
+    },
+    colors: ["#FF8400", "#6366f1", "#14b8a6", "#ec4899", "#8b5cf6", "#3b82f6"],
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: true,
+      style: {
+        colors: ["#fff"],
+      },
+    },
+    grid: {
+      borderColor: "rgba(255, 255, 255, 0.08)",
+      xaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: false,
+        },
+      },
+    },
+    tooltip: {
+      theme: "dark" as const,
+    },
+    theme: {
+      mode: "dark" as const,
     },
   };
   return (
