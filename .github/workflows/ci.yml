@@ -7,11 +7,13 @@ on:
       - 'feature/**'
     paths:
       - 'backend/**'
+      - '.github/workflows/**'
   pull_request:
     branches:
       - main
     paths:
       - 'backend/**'
+      - '.github/workflows/**'
 
 jobs:
   build-and-test:
