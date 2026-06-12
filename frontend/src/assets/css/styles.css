@@ -355,3 +355,80 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary-hover);
   text-shadow: 0 0 8px var(--primary-glow);
 }
+
+/* Responsive Table for Mobile viewports */
+@media (max-width: 768px) {
+  /* Remove table borders and backgrounds from wrapper */
+  .table-responsive {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+  
+  .table {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  /* Hide the desktop headers */
+  .table thead {
+    display: none !important;
+  }
+  
+  .table tbody, 
+  .table tr, 
+  .table td {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  /* Transform each row into a distinct glass card */
+  .table tbody tr {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(12px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 16px !important;
+    padding: 1rem 1.25rem !important;
+    box-shadow: var(--glass-shadow) !important;
+    margin-bottom: 1.25rem !important;
+    transition: var(--transition-smooth) !important;
+  }
+  
+  .table tbody tr:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  /* Style cells as key-value pairs */
+  .table td {
+    text-align: right !important;
+    padding: 0.65rem 0 !important;
+    position: relative !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  
+  .table td:last-child {
+    border-bottom: none !important;
+  }
+  
+  /* Render key labels on the left using the data-label attribute */
+  .table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+  }
+  
+  .table td.value-column {
+    font-size: 0.95rem !important;
+  }
+}

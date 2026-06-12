@@ -44,11 +44,11 @@ const DataTable = () => {
           <tbody>
             {page.content?.map((item) => (
               <tr key={item.id}>
-                <td>{formatLocalDate(item.date, "dd/MM/yyyy")}</td>
-                <td>{item.seller.name}</td>
-                <td>{item.visited}</td>
-                <td>{item.deals}</td>
-                <td className="value-column">{item.amount.toFixed(2)}</td>
+                <td data-label="Data">{formatLocalDate(item.date, "dd/MM/yyyy")}</td>
+                <td data-label="Vendedor">{item.seller.name}</td>
+                <td data-label="Clientes visitados">{item.visited}</td>
+                <td data-label="Negócios fechados">{item.deals}</td>
+                <td data-label="Valor" className="value-column">{item.amount.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>

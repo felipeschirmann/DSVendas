@@ -53,6 +53,7 @@ const BarChart = () => {
       bar: {
         horizontal: true,
         borderRadius: 4,
+        distributed: true,
       },
     },
     chart: {
@@ -62,7 +63,10 @@ const BarChart = () => {
         show: false,
       },
     },
-    colors: ["#FF8400"],
+    colors: ["#FF8400", "#6366f1", "#14b8a6", "#ec4899", "#8b5cf6", "#3b82f6"],
+    legend: {
+      show: false,
+    },
     dataLabels: {
       enabled: true,
       style: {
