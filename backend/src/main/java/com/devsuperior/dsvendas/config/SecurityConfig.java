@@ -54,8 +54,12 @@ public class SecurityConfig {
 
 	CorsConfigurationSource profileConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList(env.getProperty("cors.allow.frontend")));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+		String allowedOrigins = env.getProperty("cors.allow.frontend");
+		if (allowedOrigins != null) {
+			configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split("\\s*,\\s*")));
+		}
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
