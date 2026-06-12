@@ -90,6 +90,16 @@ jobs:
             ${{ secrets.DOCKER_HUB_USERNAME }}/ds-vendas:latest
             ${{ secrets.DOCKER_HUB_USERNAME }}/ds-vendas:sha-${{ steps.vars.outputs.short_sha }}
 
+      - name: Copy Nginx config via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "nginx/dsvendas.conf"
+          target: "/tmp"
+          strip_components: 1
+
       - name: Remotely Deploy to Cloud VM
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -159,3 +169,7 @@ jobs:
             
             # Prune unused images and containers (removes the old image version)
             docker image prune -a -f
+            
+            # Move Nginx config and reload Nginx
+            sudo mv /tmp/dsvendas.conf /etc/nginx/conf.d/dsvendas.conf
+            sudo nginx -t && sudo nginx -s reload
