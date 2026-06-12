@@ -101,9 +101,6 @@ jobs:
             mkdir -p /home/${{ secrets.SSH_USERNAME }}/dsvendas
             cd /home/${{ secrets.SSH_USERNAME }}/dsvendas
             
-            # Prune unused images and containers
-            docker image prune -a -f
-            
             # Re-create the docker-compose configuration
             cat << 'EOF' > docker-compose-homolog.yml
             version: '3.8'
@@ -151,6 +148,14 @@ jobs:
             echo "IMAGE_TAG=sha-${{ steps.vars.outputs.short_sha }}" >> .env.homolog
             echo "DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" >> .env.homolog
             
-            # Pull and deploy stack
+            # Pull images
             docker compose -f docker-compose-homolog.yml --env-file .env.homolog pull
-            docker compose -f docker-compose-homolog.yml --env-file .env.homolog up -d --force-recreate
+            
+            # Stop and remove containers and volumes (homolog is ephemeral)
+            docker compose -f docker-compose-homolog.yml --env-file .env.homolog down -v
+            
+            # Deploy fresh stack
+            docker compose -f docker-compose-homolog.yml --env-file .env.homolog up -d
+            
+            # Prune unused images and containers (removes the old image version)
+            docker image prune -a -f
