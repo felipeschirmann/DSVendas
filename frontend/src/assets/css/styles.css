@@ -1,32 +1,357 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-    --color-primary: #FF8400;
+  --primary: #FF8400;
+  --primary-hover: #ff9824;
+  --primary-glow: rgba(255, 132, 0, 0.25);
+  --bg-deep: #090a0f;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #171926 0%, #090a0f 80%);
+  --glass-bg: rgba(20, 24, 43, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-focus: rgba(255, 132, 0, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-inverse: #090a0f;
+  
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html, body {
-    height: 100%;
-    font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glowing background blobs */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.15;
+  filter: blur(120px);
+}
+
+body::before {
+  top: -10vw;
+  left: -10vw;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 80%);
+}
+
+body::after {
+  bottom: -10vw;
+  right: -10vw;
+  background: radial-gradient(circle, #6366f1 0%, transparent 80%);
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .content {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 
-.footer {
-    flex-shrink: 0;
-    text-align: center;
+/* Typography overrides */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
 }
 
-.bg-primary {
-    background-color: var(--color-primary) !important;
+.text-muted, .text-secondary {
+  color: #cbd5e1 !important;
 }
 
-.text-primary {
-    color: var(--color-primary) !important;
+/* Custom class names for headers and layout */
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-left: 4px solid var(--primary);
+  padding-left: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition-smooth);
+  height: 100%;
+  margin-bottom: 2rem;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55), 0 0 15px 0 rgba(255, 132, 0, 0.05);
+}
+
+/* Modern Sticky Glass Navbar */
+.glass-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(9, 10, 15, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  transition: var(--transition-smooth);
+}
+
+.glass-navbar .logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.glass-navbar .logo-container img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 4px var(--primary-glow));
+}
+
+/* Table Override Styles */
+.table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  background: var(--glass-bg);
+}
+
+.table {
+  --bs-table-bg: transparent !important;
+  --bs-table-striped-bg: transparent !important;
+  --bs-table-hover-bg: transparent !important;
+  --bs-table-color: var(--text-main) !important;
+  --bs-table-striped-color: var(--text-main) !important;
+  --bs-table-hover-color: var(--text-main) !important;
+  color: var(--text-main) !important;
+  margin-bottom: 0 !important;
+  background-color: transparent !important;
+  border-collapse: collapse !important;
+}
+
+.table th, .table td {
+  padding: 0.95rem 1.25rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background-color: transparent !important;
+  color: var(--text-main) !important;
+}
+
+.table thead th {
+  font-family: var(--font-heading);
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  color: #cbd5e1 !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.table tbody tr {
+  background-color: transparent !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) td {
+  background-color: rgba(255, 255, 255, 0.015) !important;
+}
+
+.table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.table td {
+  font-size: 0.9rem !important;
+}
+
+/* Value Columns styling */
+.table td.value-column {
+  font-weight: 600;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pagination Styling */
+.pagination {
+  margin: 1.5rem 0 !important;
+  gap: 8px;
+}
+
+.pagination .page-item .page-link {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text-main) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  transition: var(--transition-smooth) !important;
+  cursor: pointer;
+}
+
+.pagination .page-item:not(.disabled) .page-link:hover {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--bg-deep) !important;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--bg-deep) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.pagination .page-item.disabled .page-link {
+  background: rgba(255, 255, 255, 0.01) !important;
+  border-color: rgba(255, 255, 255, 0.03) !important;
+  color: rgba(255, 255, 255, 0.2) !important;
+  cursor: not-allowed;
+}
+
+/* Jumbotron Style for Home Page */
+.glass-jumbotron {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 3.5rem 2.5rem;
+  box-shadow: var(--glass-shadow);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-jumbotron h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
+}
+
+.glass-jumbotron p.lead {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.glass-jumbotron hr {
+  border-color: rgba(255, 255, 255, 0.08);
+  margin: 2rem auto;
+  max-width: 200px;
+}
+
+/* Modern Glowing Button */
+.btn-primary-glow {
+  background: linear-gradient(135deg, var(--primary) 0%, #ff5500 100%) !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  padding: 0.75rem 2rem !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 15px var(--primary-glow) !important;
+  transition: var(--transition-smooth) !important;
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+.btn-primary-glow:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px 0 rgba(255, 132, 0, 0.45) !important;
+}
+
+.btn-primary-glow:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Custom Footer style */
+.glass-footer {
+  margin-top: auto;
+  background: rgba(9, 10, 15, 0.65) !important;
+  backdrop-filter: blur(10px) !important;
+  border-top: 1px solid var(--glass-border) !important;
+  padding: 1.5rem 0 !important;
+  text-align: center;
+}
+
+.glass-footer p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.glass-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.glass-footer a:hover {
+  color: var(--primary-hover);
+  text-shadow: 0 0 8px var(--primary-glow);
 }

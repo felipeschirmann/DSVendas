@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 bg-dark">
+    <footer className="glass-footer py-4">
       <div className="container">
         <p className="text-light">
           App desenvolvido por{" "}
@@ -12,7 +12,7 @@ const Footer = () => {
             Felipe Schirmann
           </a>
         </p>
-        <p className="text-light">
+        <p className="text-muted">
           <small>
             <strong>Semana Spring React</strong>
             <br />

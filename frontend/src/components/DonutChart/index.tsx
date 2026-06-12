@@ -28,6 +28,31 @@ const DonutChart = () => {
   const options = {
     legend: {
       show: true,
+      labels: {
+        colors: "#cbd5e1",
+      },
+    },
+    chart: {
+      background: "transparent",
+      foreColor: "#cbd5e1",
+    },
+    colors: ["#FF8400", "#6366f1", "#14b8a6", "#ec4899", "#8b5cf6", "#3b82f6"],
+    dataLabels: {
+      enabled: true,
+      style: {
+        colors: ["#fff"],
+      },
+    },
+    stroke: {
+      show: true,
+      colors: ["rgba(20, 24, 43, 0.65)"],
+      width: 2,
+    },
+    tooltip: {
+      theme: "dark" as const,
+    },
+    theme: {
+      mode: "dark" as const,
     },
   };
   return (
