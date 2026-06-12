@@ -44,4 +44,22 @@ public class SaleControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
     }
+
+    @Test
+    public void findAllWithInvalidSwaggerSortShouldReturnUnsortedPage() throws Exception {
+        mockMvc.perform(get("/sales?page=0&size=20&sort=string")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").exists())
+                .andExpect(jsonPath("$.content").isArray());
+    }
+
+    @Test
+    public void findAllWithInvalidSortPropertyShouldReturnBadRequest() throws Exception {
+        mockMvc.perform(get("/sales?page=0&size=20&sort=invalidField")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Invalid sorting property"))
+                .andExpect(jsonPath("$.message").exists());
+    }
 }

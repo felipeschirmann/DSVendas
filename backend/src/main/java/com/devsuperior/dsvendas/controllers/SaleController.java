@@ -23,6 +23,17 @@ public class SaleController {
 	
 	@GetMapping
 	public ResponseEntity <Page <SaleDTO>> findAll(Pageable pageable){
+		if (pageable.getSort().isSorted()) {
+			boolean hasInvalidSort = pageable.getSort().stream()
+					.anyMatch(order -> "string".equalsIgnoreCase(order.getProperty()));
+			if (hasInvalidSort) {
+				pageable = org.springframework.data.domain.PageRequest.of(
+						pageable.getPageNumber(),
+						pageable.getPageSize(),
+						org.springframework.data.domain.Sort.unsorted()
+				);
+			}
+		}
 		Page<SaleDTO> list = service.findAll(pageable);
 		return ResponseEntity.ok(list);
 	}
