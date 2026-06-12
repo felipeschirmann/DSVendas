@@ -5,7 +5,7 @@ services:
     image: postgres:15-alpine
     container_name: dsvendas-postgres
     ports:
-      - "${POSTGRES_PORT:-8082}:5432"
+      - "${POSTGRES_PORT:-8181}:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-dsvendas_db}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -19,10 +19,10 @@ services:
       retries: 5
 
   app:
-    image: ${DOCKER_HUB_USERNAME:-felipeschirmann}/dsvendas:${IMAGE_TAG:-latest}
+    image: ${DOCKER_HUB_USERNAME:-felipeschirmann}/ds-vendas:${IMAGE_TAG:-latest}
     container_name: dsvendas-app
     ports:
-      - "${APP_PORT:-8081}:8080"
+      - "${APP_PORT:-8180}:8080"
     environment:
       APP_PROFILE: ${APP_PROFILE:-homolog}
       DSVENDAS_DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-dsvendas_db}
