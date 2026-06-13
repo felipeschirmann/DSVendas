@@ -10,10 +10,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-package:
-    name: Build and Package Application
+  check-changes:
+    name: Check for backend changes
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Detect Changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          base: ${{ github.event.workflow_run.before || 'HEAD~1' }}
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/cd.yml'
+
+  build-and-package:
+    name: Build and Package Application
+    needs: check-changes
+    runs-on: ubuntu-latest
+    if: ${{ needs.check-changes.outputs.backend == 'true' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -44,8 +67,9 @@ jobs:
 
   publish-docker-and-deploy:
     name: Publish Docker Image and Deploy
-    needs: build-and-package
+    needs: [check-changes, build-and-package]
     runs-on: ubuntu-latest
+    if: ${{ needs.check-changes.outputs.backend == 'true' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -53,6 +77,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Set Short SHA
+          # Extract short SHA for build tags
         id: vars
         run: |
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
