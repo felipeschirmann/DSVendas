@@ -6,14 +6,18 @@ on:
       - main
     paths:
       - 'backend/**'
+      - '!backend/**/*.md'
       - 'frontend/**'
+      - '!frontend/**/*.md'
       - '.github/workflows/**'
   pull_request:
     branches:
       - main
     paths:
       - 'backend/**'
+      - '!backend/**/*.md'
       - 'frontend/**'
+      - '!frontend/**/*.md'
       - '.github/workflows/**'
 
 jobs:
