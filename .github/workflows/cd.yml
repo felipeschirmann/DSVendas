@@ -37,12 +37,16 @@ jobs:
           echo "Changed files:"
           echo "$CHANGED_FILES"
           
-          if echo "$CHANGED_FILES" | grep -qE '^(backend/|\.github/workflows/cd\.yml)'; then
+          # Exclude markdown files (.md) from relevant code changes
+          RELEVANT_CHANGES=$(echo "$CHANGED_FILES" | grep -E '^(backend/|\.github/workflows/cd\.yml)' | grep -vE '\.md$' || true)
+          
+          if [ -n "$RELEVANT_CHANGES" ]; then
             echo "backend=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in backend or cd.yml. Backend build will run."
+            echo "Relevant code changes detected (excluding markdown):"
+            echo "$RELEVANT_CHANGES"
           else
             echo "backend=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in backend or cd.yml. Backend build will be skipped."
+            echo "No relevant code changes detected (only documentation or non-backend files changed). Skipping build."
           fi
 
   build-and-package:
