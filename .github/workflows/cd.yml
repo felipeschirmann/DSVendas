@@ -21,17 +21,29 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Detect Changes
-        uses: dorny/paths-filter@v3
         id: filter
-        with:
-          base: ${{ github.event.workflow_run.before || 'HEAD~1' }}
-          filters: |
-            backend:
-              - 'backend/**'
-              - '.github/workflows/cd.yml'
+        run: |
+          if ! git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            echo "No parent commit found (initial commit). Triggering backend build."
+            echo "backend=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "Comparing HEAD with HEAD^..."
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          if echo "$CHANGED_FILES" | grep -qE '^(backend/|\.github/workflows/cd\.yml)'; then
+            echo "backend=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in backend or cd.yml. Backend build will run."
+          else
+            echo "backend=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in backend or cd.yml. Backend build will be skipped."
+          fi
 
   build-and-package:
     name: Build and Package Application
