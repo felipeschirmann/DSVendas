@@ -10,6 +10,7 @@ on:
       - 'frontend/**'
       - '!frontend/**/*.md'
       - '.github/workflows/**'
+      - 'sonar-project.properties'
   pull_request:
     branches:
       - main
@@ -19,6 +20,7 @@ on:
       - 'frontend/**'
       - '!frontend/**/*.md'
       - '.github/workflows/**'
+      - 'sonar-project.properties'
 
 jobs:
   build-and-test:
